@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion> 
+    <groupId>org.jjazzlab.plugins</groupId>         
+    <artifactId>jar-plugins</artifactId>
+    <version>4.1.0</version>
+    <name>Jar Plugins</name>
+    <packaging>pom</packaging>    
+
+
+    <!-- generic project meta-data for all plugins  -->
+    <organization>
+        <url>https://www.jjazzlab.org</url>
+    </organization>       
+    <url>https://github.com/jjazzboss/JJazzLabJarPlugins</url>
+    <description>JJazzLab plugins as jar files</description>  
+    <licenses>
+        <license>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
+            <url>https://www.gnu.org/licenses/lgpl-2.1.en.html#license-text</url>
+        </license>
+    </licenses>      
+    <developers>
+        <developer>
+            <id>jlelasseux</id>
+            <name>Jerome Lelasseux</name>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <organization>JJazzLab</organization>
+            <organizationUrl>https://www.jjazzlab.org</organizationUrl>            
+            <email>jl@jjazzlab.org</email>
+            <timezone>Europe/Paris</timezone>
+        </developer>
+    </developers>         
+    <scm>
+        <connection>scm:git:git://github.com/jjazzboss/JJazzLabJarPlugins</connection>
+        <developerConnection>scm:git:git@github.com:jjazzboss/JJazzLabJarPlugins</developerConnection>
+        <url>https://github.com/jjazzboss/JJazzLabJarPlugins</url>
+    </scm>              
+   
+   
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>         
+        <jjazzlab.compiler.release>17</jjazzlab.compiler.release>
+        <jjazzlab.maven.compiler.plugin.version>3.11.0</jjazzlab.maven.compiler.plugin.version>        
+        <netbeans.version>RELEASE210</netbeans.version>
+    </properties>
+    
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${jjazzlab.maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <release>${jjazzlab.compiler.release}</release>
+                    </configuration>
+                </plugin>  
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.5.3</version>
+                </plugin>                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.6.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.4.0</version>     
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                        <tokenAuth>true</tokenAuth>
+                        <skipPublishing>true</skipPublishing>
+                    </configuration>                       
+                </plugin>        
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.4.1</version>                                
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>           
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>                   
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.2.4</version>
+                    <executions>
+                        <execution>
+                            <!-- GPG Signed Components -->                            
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                            <configuration>
+                                <executable>c:/Program Files (x86)/GnuPG/bin/gpg.exe</executable>       
+                            </configuration>
+                        </execution>
+                    </executions>                    
+                </plugin>                
+            </plugins>
+        </pluginManagement>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+            </plugin>
+        </plugins>                        
+        
+    </build>
+    
+    <dependencies>
+        <dependency> 
+            <groupId>org.jjazzlab</groupId> 
+            <artifactId>jjazzlab-toolkit</artifactId> 
+            <version>${project.version}</version> 
+        </dependency>    
+    </dependencies>
+    
+    <modules>
+        <module>YamJJazzJar</module>
+        <module>FluidSynthEmbeddedSynthJar</module>
+    </modules>
+  
+</project>

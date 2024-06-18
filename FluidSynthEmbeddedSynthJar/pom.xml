@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion> 
+    <parent>
+        <groupId>org.jjazzlab.plugins</groupId>
+        <artifactId>jar-plugins</artifactId>
+        <version>4.1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>  
+    <artifactId>fluidsynthembeddedsynth-jar</artifactId>
+    <name>FluidSynthEmbeddedSynth jar</name>
+    <packaging>jar</packaging>    
+
+
+    <!-- project meta-data  -->
+    <url>https://github.com/jjazzboss/JJazzLabJarPlugins/FluidSynthEmbeddedSynth</url>
+    <description>FluidSynthEmbeddedSynth plugin jar</description>  
+    <scm>
+        <connection>scm:git:git://github.com/jjazzboss/JJazzLabJarPlugins</connection>
+        <developerConnection>scm:git:git@github.com:jjazzboss/JJazzLabJarPlugins</developerConnection>
+        <url>https://github.com/jjazzboss/JJazzLabJarPlugins/FluidSynthEmbeddedSynth</url>
+    </scm>          
+   
+    
+    <build>
+        <plugins>              
+            
+            
+            <!-- Assembler to produce uber-jars for binaries and source code -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-jar-with-dependencies-and-sources-jar</id>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createSourcesJar>true</createSourcesJar>
+                            <transformers>
+                                <!-- Make sure to have all the META-INF/services files merged -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
+                            </transformers>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.jjazzlab.plugins:fluidsynthembeddedsynth</include>
+                                </includes>
+                                <!--                                <excludes>
+                                    <exclude>*:maven-core</exclude>
+                                </excludes>-->
+                            </artifactSet>                            
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>            
+                             
+            <!-- Produce the final -javadoc.jar file from core dependencies -javadoc.jar files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-javadoc-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>          
+                        <configuration>
+                            <sourceFileIncludes>
+                                <include>org/jjazz/fluidsynthembeddedsynth/**/api/**/*.java</include>
+                                <include>org/jjazz/fluidsynthembeddedsynth/**/spi/**/*.java</include>
+                            </sourceFileIncludes>      
+                            <locale>en</locale>                                                  
+                            <show>public</show>
+                            <nohelp>false</nohelp>
+                            <detectLinks>false</detectLinks>
+                            <detectOfflineLinks>true</detectOfflineLinks>   
+                            <quiet>false</quiet>
+                            <doclint>none</doclint>
+                            <release>${jjazzlab.compiler.release}</release>   
+                            <additionalOptions>--enable-preview --add-modules=jdk.incubator.foreign</additionalOptions>
+                            <doctitle>FluidSynthEmbeddedSynth ${project.version} API Index</doctitle>
+                            <includeDependencySources>true</includeDependencySources>       <!-- collect all direct dependencies' javadoc -->                                         
+                        </configuration>                                    
+                    </execution>
+                </executions>                                                            
+            </plugin>                      
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+            </plugin>                        
+                            
+        </plugins>
+    </build>
+    
+  
+    <dependencies>                   
+        <dependency> 
+            <groupId>org.jjazzlab.plugins</groupId> 
+            <artifactId>fluidsynthembeddedsynth</artifactId> 
+            <version>${project.version}</version> 
+        </dependency>     
+        <dependency> 
+            <groupId>org.jjazzlab</groupId> 
+            <artifactId>fluidsynthjava</artifactId> 
+            <version>0.3.1</version> 
+        </dependency>                                                        
+    </dependencies>
+  
+</project>
