@@ -1,6 +1,6 @@
 # JJazzLab jar plugins
 
-This Maven project generates, for each of the [JJazzLab plugins](https://github.com/jjazzboss/JJazzLab/plugins), a jar deployable on the Sonatype Maven Central repository. 
+This Maven project generates, for each of the [JJazzLab plugins](https://github.com/jjazzboss/JJazzLab/tree/master/plugins), a jar deployable on the Sonatype Maven Central repository. 
 
 These jar plugins are to be used with the [JJazzLab Toolkit](https://github.com/jjazzboss/JJazzLabToolkit).
 
